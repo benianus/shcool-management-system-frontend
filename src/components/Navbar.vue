@@ -34,7 +34,7 @@
             <li><a>Item 3</a></li>
           </ul>
         </div>
-        <RouterLink to="/" class="text-xl font-bold">School Management</RouterLink>
+        <RouterLink to="/" class="btn btn-ghost text-xl font-bold">School Management</RouterLink>
       </div>
       <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1 gap-2">

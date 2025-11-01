@@ -7,19 +7,9 @@ export const useTeacherStore = defineStore('teachers', {
     teachers: [],
   }),
   actions: {
-    async fetchTeachers(page: number = 1) {
+    async fetchTeachers({ page = 1, filter = '' }: { page?: number; filter?: string } = {}) {
       try {
-        const response = await TeacherApi.getAll(page)
-        this.teachers = response?.data
-        return response
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    async filterTeachers(filter: string) {
-      try {
-        const response = await TeacherApi.filter(filter)
-        console.log(response?.data)
+        const response = await TeacherApi.getAll({ page, filter })
         this.teachers = response?.data
         return response
       } catch (error) {

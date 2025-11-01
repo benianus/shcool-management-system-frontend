@@ -1,5 +1,5 @@
 <template>
-  <div class="place-items-center mb-3">
+  <div class="place-items-center">
     <LoaderCircle class="animate-spin" v-show="loading" />
   </div>
 </template>
@@ -13,7 +13,6 @@ const props = defineProps({
     default: false,
   },
 })
-
 </script>
 
 <style scoped></style>
