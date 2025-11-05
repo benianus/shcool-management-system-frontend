@@ -25,6 +25,7 @@ const router = createRouter({
       path: '/teachers/edit/:id',
       name: 'edit teacher',
       component: () => import('@/views/teachers/EditTeacher.vue'),
+      props: true,
     },
     {
       path: '/students',

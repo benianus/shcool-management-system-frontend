@@ -31,6 +31,7 @@ const form = useForm({
 })
 
 const { setErrors, isSubmitting, errors } = form
+const isDisabled = ref(false)
 
 const classes = ref([
   {
@@ -49,7 +50,9 @@ const onSubmit = form.handleSubmit(async (values) => {
 
     // TODO: get the user email from the local storage
     values = { ...values, ...{ user: 'beniane39@gmail.com' } }
+    isDisabled.value = true
     const response = await TeacherApi.create(values)
+    isDisabled.value = false
     if (response.status === 201) {
       router.push('/teachers')
     }
@@ -128,7 +131,7 @@ onMounted(async () => {
       <!-- errors -->
       <div class="mb-3 text-sm text-red-400">{{ errors.name }}</div>
       <!-- submit -->
-      <Button type="submit" class="text-white w-full flex justify-center items-center">
+      <Button type="submit" class="text-white w-full flex justify-center items-center" :disabled="isDisabled">
         <Loader :loading="isSubmitting" />
         <p>Submit</p>
       </Button>

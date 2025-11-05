@@ -3,8 +3,9 @@ import type { Teacher } from '@/models/teacher'
 import { defineStore } from 'pinia'
 
 export const useTeacherStore = defineStore('teachers', {
-  state: (): { teachers: Teacher[] } => ({
+  state: (): { teachers: Teacher[]; teacher: Teacher } => ({
     teachers: [],
+    teacher: {},
   }),
   actions: {
     async fetchTeachers({ page = 1, filter = '' }: { page?: number; filter?: string } = {}) {
@@ -16,10 +17,23 @@ export const useTeacherStore = defineStore('teachers', {
         console.log(error)
       }
     },
+    async showTeacher({ id }: { id?: string | string[] }) {
+      try {
+        const response = await TeacherApi.show({ id: id })
+        console.log(response?.data)
+        this.teacher = response?.data
+        return response
+      } catch (error) {
+        console.log(error)
+      }
+    },
   },
   getters: {
-    remaining: (state): Teacher[] => {
+    remainingTeachers: (state): Teacher[] => {
       return state.teachers
+    },
+    remainingTeacher: (state): Teacher => {
+      return state.teacher
     },
   },
 })

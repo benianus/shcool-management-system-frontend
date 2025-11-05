@@ -39,10 +39,16 @@ export const TeacherApi = {
       console.log(error)
     }
   },
-  update: async (values: { name: string; email: string; user: string }) => {
+  update: async ({
+    id,
+    values,
+  }: {
+    id?: string | string[]
+    values?: { name?: string; email?: string; course?: string }
+  } = {}) => {
     try {
       await getCSRF()
-      const response = await axiosClient.put('/api/teachers', values)
+      const response = await axiosClient.put(`/api/teachers/${id}`, values)
       console.log(response)
       return response
     } catch (error) {
@@ -52,7 +58,7 @@ export const TeacherApi = {
   delete: async ({ id }: { id?: string | string[] }) => {
     try {
       await getCSRF()
-      const response = await axiosClient.put('/api/teachers')
+      const response = await axiosClient.delete(`/api/teachers/${id}`)
       console.log(response)
       return response
     } catch (error) {

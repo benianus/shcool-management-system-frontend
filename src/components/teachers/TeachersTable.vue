@@ -30,7 +30,7 @@
             </td>
             <td>
               <RouterLink :to="{ name: 'edit teacher', params: { id: teacher.id } }">
-                <button class="btn border-2 rounded-full">Edit</button>
+                <button class="btn rounded-full">Edit</button>
               </RouterLink>
             </td>
           </tr>
@@ -58,7 +58,8 @@ watch([() => paginationStore.page, () => searchbarStore.filter], async ([page, f
   loading.value = true
   paginationStore.disablePrevBtn = page === 1
   const response = await teachersStore.fetchTeachers({ page, filter })
-  paginationStore.disableNextBtn = response?.data.length === 0
+  console.log(response?.data)
+  paginationStore.disableNextBtn = response?.data.length < 9
   loading.value = false
 })
 
