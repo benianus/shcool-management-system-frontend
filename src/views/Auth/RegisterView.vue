@@ -1,9 +1,6 @@
 <template>
-  <div>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate veritatis incidunt eaque
-    similique at, harum optio quibusdam et ex? Deserunt nisi vitae molestias eligendi, enim magni?
-    Libero doloremque et quas.
-  </div>
+  <div>Register</div>
+  <p>Work In Progress</p>
 </template>
 
 <script setup lang="ts"></script>

@@ -17,7 +17,12 @@ import Loader from '@/components/Loader.vue'
 import { TeacherApi } from '@/data/apiService/teachers'
 import { useRoute, useRouter } from 'vue-router'
 import TitleBar from '@/components/TitleBar.vue'
+import { useClassesStore } from '@/stores/classesStore'
 
+// stores
+const classesStore = useClassesStore()
+
+// validation
 const formSchema = toTypedSchema(
   z.object({
     name: z.string().min(3).max(50),
@@ -33,15 +38,10 @@ const form = useForm({
 const { setErrors, isSubmitting, errors } = form
 const isDisabled = ref(false)
 
-const classes = ref([
-  {
-    id: 0,
-    name: '',
-  },
-])
-
+// router
 const router = useRouter()
 
+// methods
 const onSubmit = form.handleSubmit(async (values) => {
   try {
     /**
@@ -50,26 +50,30 @@ const onSubmit = form.handleSubmit(async (values) => {
 
     // TODO: get the user email from the local storage
     values = { ...values, ...{ user: 'beniane39@gmail.com' } }
+    /**
+     * disable save button while create a new teacher
+     * make the button idempotent
+     */
     isDisabled.value = true
     const response = await TeacherApi.create(values)
-    isDisabled.value = false
-    if (response.status === 201) {
+    if (response?.status === 201) {
       router.push('/teachers')
     }
   } catch (error) {
-    console.log(error.data.message)
+    console.log(error.response.data.message)
     setErrors({
-      name: error.data.message,
+      name: error.response?.data?.message ?? 'something wrong',
     })
+  } finally {
+    isDisabled.value = false
   }
 })
 
 onMounted(async () => {
   try {
-    const response = await ClassesApi.getAll()
-    classes.value = response?.data
+    await classesStore.fetchClasses()
   } catch (error) {
-    console.log(error.data.message)
+    console.log(error.response?.data?.message ?? 'something wrong')
   }
 })
 </script>
@@ -120,7 +124,7 @@ onMounted(async () => {
               v-bind="componentField"
               class="border-gray-400 border-2 rounded-lg px-2 py-2"
             >
-              <option v-for="course in classes" :key="course.id" :value="course.name">
+              <option v-for="course in classesStore.classes" :key="course.id" :value="course.name">
                 {{ course.name }}
               </option>
             </select>
@@ -131,7 +135,11 @@ onMounted(async () => {
       <!-- errors -->
       <div class="mb-3 text-sm text-red-400">{{ errors.name }}</div>
       <!-- submit -->
-      <Button type="submit" class="text-white w-full flex justify-center items-center" :disabled="isDisabled">
+      <Button
+        type="submit"
+        class="text-white w-full flex justify-center items-center"
+        :disabled="isDisabled"
+      >
         <Loader :loading="isSubmitting" />
         <p>Submit</p>
       </Button>

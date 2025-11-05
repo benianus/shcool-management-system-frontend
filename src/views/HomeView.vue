@@ -1,7 +1,6 @@
 <template>
   <div>Dashboard</div>
-
-  <p v-pre>{{ posts }}</p>
+  <p>Work In Progress</p>
 </template>
 
 <script setup lang="ts">

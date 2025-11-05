@@ -1,6 +1,6 @@
 <template>
-  <div class="place-items-center mx-auto max-w-md bg-amber-300">
-  </div>
+  <p>Login</p>
+  <p>Work In Progress</p>
 </template>
 
 <script setup lang="ts"></script>

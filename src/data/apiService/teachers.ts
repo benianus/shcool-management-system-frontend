@@ -29,7 +29,7 @@ export const TeacherApi = {
       console.log(error)
     }
   },
-  create: async (values: { name: string; email: string; user: string }) => {
+  create: async (values: { name?: string; email?: string; course?: string; user?: string }) => {
     try {
       await getCSRF()
       const response = await axiosClient.post('/api/teachers', values)

@@ -3,16 +3,18 @@ import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { ClassesApi } from '@/data/apiService/classes'
 import Loader from '@/components/Loader.vue'
 import { TeacherApi } from '@/data/apiService/teachers'
 import { useRoute, useRouter } from 'vue-router'
 import TitleBar from '@/components/TitleBar.vue'
 import { useTeacherStore } from '@/stores/teachers'
+import { useClassesStore } from '@/stores/classesStore'
 
 // stores
 const teacherStore = useTeacherStore()
+const classesStore = useClassesStore()
 
 // zod & vee-validate form
 const formSchema = toTypedSchema(
@@ -30,12 +32,7 @@ const form = useForm({
 const { setErrors, errors, isSubmitting } = form
 
 // states
-const classes = ref([
-  {
-    id: 0,
-    name: '',
-  },
-])
+const isLoading = ref(false)
 
 // vue router
 const router = useRouter()
@@ -73,6 +70,7 @@ const onSubmit = form.handleSubmit(async (values) => {
 
 async function deleteTeacher() {
   try {
+    isLoading.value = true
     console.log('Delete')
     const response = await TeacherApi.delete({ id: route.params.id })
     if (response?.status === 200) {
@@ -80,17 +78,23 @@ async function deleteTeacher() {
     }
   } catch (error) {
     console.log(error)
+  } finally {
+    isLoading.value = false
   }
 }
-onMounted(async () => {
+
+watch(() => route.params.id, fetchData, { immediate: true })
+
+async function fetchData(id: string | string[] | undefined) {
   try {
-    await teacherStore.showTeacher({ id: route.params.id })
-    const courses = await ClassesApi.getAll()
-    classes.value = courses?.data
+    await teacherStore.showTeacher({ id: id })
+    // const courses = await ClassesApi.getAll()
+    // classes.value = courses?.data
+    await classesStore.fetchClasses()
   } catch (error) {
     console.log(error.data.message)
   }
-})
+}
 </script>
 
 <template>
@@ -139,7 +143,7 @@ onMounted(async () => {
               v-bind="componentField"
               class="border-gray-400 border-2 rounded-lg px-2 py-2"
             >
-              <option v-for="course in classes" :key="course.id" :value="course.name">
+              <option v-for="course in classesStore.classes" :key="course.id" :value="course.name">
                 {{ course.name }}
               </option>
             </select>
@@ -162,7 +166,7 @@ onMounted(async () => {
         </p>
         <form class="float-right" @submit.prevent="deleteTeacher">
           <button class="btn rounded-md">
-            <Loader :loading="isSubmitting" />
+            <Loader :loading="isLoading" />
             <p>Confirm</p>
           </button>
         </form>
