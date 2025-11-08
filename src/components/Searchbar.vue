@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { useSearchbarStore } from '@/stores/searchbar'
+import { useSearchbarStore } from '@/stores/searchbarStore'
 import { ref, watch } from 'vue'
 
 const searchbar = useSearchbarStore()

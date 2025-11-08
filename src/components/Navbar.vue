@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import { AuthApi } from '@/data/apiService/authApi'
+import { useAuthStore } from '@/stores/authStore'
+import { useRouter } from 'vue-router'
+
+const authStore = useAuthStore()
+const router = useRouter()
+
+async function logout() {
+  const response = await AuthApi.logout()
+  if (response?.status === 204) {
+    router.push('/login')
+  }
+}
+</script>
+
 <template>
   <div>
     <div class="navbar bg-base-100 shadow-sm">
@@ -61,7 +77,10 @@
         </ul>
       </div>
       <div class="navbar-end">
-        <ul class="menu menu-horizontal items-center gap-2 px-1">
+        <ul
+          class="menu menu-horizontal items-center gap-2 px-1"
+          v-if="!authStore.remainingIsAuthenticated"
+        >
           <li>
             <RouterLink to="/login" active-class="bg-gray-100" exact-active-class="bg-gray-300"
               >Login</RouterLink
@@ -72,8 +91,19 @@
               >Register</RouterLink
             >
           </li>
-          <a class="btn rounded-full">Dark Mode</a>
         </ul>
+        <ul class="menu menu-horizontal items-center gap-2 px-1" v-else>
+          <li>
+            <RouterLink
+              :to="{ name: 'logout' }"
+              active-class="bg-gray-100"
+              exact-active-class="bg-gray-300"
+              @click="logout"
+              >Logout</RouterLink
+            >
+          </li>
+        </ul>
+        <a class="btn rounded-full">Dark Mode</a>
       </div>
     </div>
   </div>

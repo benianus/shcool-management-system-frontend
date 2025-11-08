@@ -2,20 +2,11 @@
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import Title from '@/components/TitleBar.vue'
-import { onMounted, reactive, ref } from 'vue'
-import { ClassesApi } from '@/data/apiService/classes'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { onMounted, ref } from 'vue'
 import Loader from '@/components/Loader.vue'
-import { TeacherApi } from '@/data/apiService/teachers'
-import { useRoute, useRouter } from 'vue-router'
+import { TeacherApi } from '@/data/apiService/teachersApi'
+import { useRouter } from 'vue-router'
 import TitleBar from '@/components/TitleBar.vue'
 import { useClassesStore } from '@/stores/classesStore'
 
@@ -56,14 +47,16 @@ const onSubmit = form.handleSubmit(async (values) => {
      */
     isDisabled.value = true
     const response = await TeacherApi.create(values)
+
     if (response?.status === 201) {
       router.push('/teachers')
+    } else if (response?.response?.status === 401) {
+      setErrors({
+        name: response.response.data.message,
+      })
     }
   } catch (error) {
     console.log(error.response.data.message)
-    setErrors({
-      name: error.response?.data?.message ?? 'something wrong',
-    })
   } finally {
     isDisabled.value = false
   }
@@ -133,7 +126,7 @@ onMounted(async () => {
         </FormItem>
       </FormField>
       <!-- errors -->
-      <div class="mb-3 text-sm text-red-400">{{ errors.name }}</div>
+      <div class="mb-3 text-sm text-red-400">{{ errors[''] }}</div>
       <!-- submit -->
       <Button
         type="submit"

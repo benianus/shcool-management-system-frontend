@@ -1,5 +1,6 @@
 import { axiosClient } from '@/config/axios'
 import { getCSRF } from '../global'
+import { useAuthStore } from '@/stores/authStore'
 
 export const TeacherApi = {
   getAll: async ({
@@ -31,12 +32,16 @@ export const TeacherApi = {
   },
   create: async (values: { name?: string; email?: string; course?: string; user?: string }) => {
     try {
-      await getCSRF()
-      const response = await axiosClient.post('/api/teachers', values)
-      // console.log(response)
+      const authStore = useAuthStore()
+      const response = await axiosClient.post('/api/teachers', values, {
+        headers: {
+          Authorization: `Bearer ${authStore.token}`,
+        },
+      })
       return response
     } catch (error) {
       console.log(error)
+      return error
     }
   },
   update: async ({
@@ -47,18 +52,28 @@ export const TeacherApi = {
     values?: { name?: string; email?: string; course?: string }
   } = {}) => {
     try {
-      await getCSRF()
-      const response = await axiosClient.put(`/api/teachers/${id}`, values)
+      // await getCSRF()
+      const authStore = useAuthStore()
+      const response = await axiosClient.put(`/api/teachers/${id}`, values, {
+        headers: {
+          Authorization: `Bearer ${authStore.token}`,
+        },
+      })
       console.log(response)
       return response
     } catch (error) {
-      console.log(error)
+      console.log(error.response.data.message)
     }
   },
   delete: async ({ id }: { id?: string | string[] }) => {
     try {
-      await getCSRF()
-      const response = await axiosClient.delete(`/api/teachers/${id}`)
+      // await getCSRF()
+      const authStore = useAuthStore()
+      const response = await axiosClient.delete(`/api/teachers/${id}`, {
+        headers: {
+          Authorization: `Bearer ${authStore.token}`,
+        },
+      })
       console.log(response)
       return response
     } catch (error) {

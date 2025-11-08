@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { usePaginationStore } from '@/stores/pagination'
+import { usePaginationStore } from '@/stores/paginationStore'
 const paginationStore = usePaginationStore()
 </script>
 

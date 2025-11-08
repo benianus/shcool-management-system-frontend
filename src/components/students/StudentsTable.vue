@@ -42,11 +42,11 @@
 </template>
 
 <script setup lang="ts">
-import { useTeacherStore } from '@/stores/teachers'
+import { useTeacherStore } from '@/stores/teachersStore'
 import { onMounted, ref, watch } from 'vue'
 import Loader from '../Loader.vue'
-import { useSearchbarStore } from '@/stores/searchbar'
-import { usePaginationStore } from '@/stores/pagination'
+import { useSearchbarStore } from '@/stores/searchbarStore'
+import { usePaginationStore } from '@/stores/paginationStore'
 import { RouterLink } from 'vue-router'
 
 const loading = ref(false)

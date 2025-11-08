@@ -1,6 +1,7 @@
 body {
   background-color: rgb(238, 238, 238);
   height: 100vh;
+  font-family: 'Elms Sans', sans-serif;
 }
 
 #app {

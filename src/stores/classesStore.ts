@@ -1,4 +1,4 @@
-import { ClassesApi } from '@/data/apiService/classes'
+import { ClassesApi } from '@/data/apiService/classesApi'
 import type { Course } from '@/models/class'
 import { defineStore } from 'pinia'
 

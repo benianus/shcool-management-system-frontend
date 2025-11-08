@@ -4,12 +4,12 @@ import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { onMounted, reactive, ref, watch } from 'vue'
-import { ClassesApi } from '@/data/apiService/classes'
+import { ClassesApi } from '@/data/apiService/classesApi'
 import Loader from '@/components/Loader.vue'
-import { TeacherApi } from '@/data/apiService/teachers'
+import { TeacherApi } from '@/data/apiService/teachersApi'
 import { useRoute, useRouter } from 'vue-router'
 import TitleBar from '@/components/TitleBar.vue'
-import { useTeacherStore } from '@/stores/teachers'
+import { useTeacherStore } from '@/stores/teachersStore'
 import { useClassesStore } from '@/stores/classesStore'
 
 // stores
@@ -88,8 +88,6 @@ watch(() => route.params.id, fetchData, { immediate: true })
 async function fetchData(id: string | string[] | undefined) {
   try {
     await teacherStore.showTeacher({ id: id })
-    // const courses = await ClassesApi.getAll()
-    // classes.value = courses?.data
     await classesStore.fetchClasses()
   } catch (error) {
     console.log(error.data.message)
