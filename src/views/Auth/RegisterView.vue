@@ -10,6 +10,7 @@ import { RouterLink } from 'vue-router'
 import { AuthApi } from '@/data/apiService/authApi'
 import router from '@/router'
 import { useLoader } from '@/composables/loader'
+import Loader from '@/components/Loader.vue'
 
 const { isLoading, changeLoadingStatus } = useLoader()
 
@@ -95,7 +96,7 @@ const onSubmit = form.handleSubmit(async (values) => {
         </FormItem>
       </FormField>
 
-      <Button type="submit"> Register </Button>
+      <Button type="submit"><Loader :loading="isLoading" /> Register </Button>
       <div class="flex justify-center gap-2 items-center">
         <p>Already have an account?</p>
         <RouterLink :to="{ name: 'login' }" class="text-blue-500 hover:underline text-sm">

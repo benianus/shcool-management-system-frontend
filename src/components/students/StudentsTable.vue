@@ -7,10 +7,10 @@
     <div class="overflow-x-auto rounded-3xl border-4 border-gray-200 bg-base-100">
       <table class="table">
         <!-- head -->
-        <thead>
+        <thead class="bg-gray-100 border-b-2">
           <tr>
             <th>Name</th>
-            <th>Email</th>
+            <th>Grade</th>
             <th>Class</th>
             <th>Status</th>
             <th>Actions</th>
@@ -18,7 +18,7 @@
         </thead>
         <tbody>
           <!-- row 1 -->
-          <tr v-for="teacher in teachersStore.teachers" :key="teacher.id">
+          <tr v-for="teacher in teachersStore.teachers" :key="teacher.id" class="border-b border-gray-200">
             <td>{{ teacher.name }}</td>
             <td>{{ teacher.email }}</td>
             <td>{{ teacher.class }}</td>

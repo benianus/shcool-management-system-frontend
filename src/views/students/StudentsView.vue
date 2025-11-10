@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <TeachersTable>
+    <StudentsTable>
       <template #title>
         <Title title="Students" btn-title="Teacher" class="my-4">
           <template #button>
@@ -14,16 +14,16 @@
       <template #pagination>
         <Pagination />
       </template>
-    </TeachersTable>
+    </StudentsTable>
   </div>
 </template>
 
 <script setup lang="ts">
 import Pagination from '@/components/Pagination.vue'
 import Searchbar from '@/components/Searchbar.vue'
-import TeachersTable from '@/components/teachers/TeachersTable.vue'
 import Title from '@/components/TitleBar.vue'
 import CustomButton from '@/components/CustomButton.vue'
+import StudentsTable from '@/components/students/StudentsTable.vue'
 </script>
 
 <style scoped></style>

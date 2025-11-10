@@ -52,7 +52,7 @@ async function logout() {
         </div>
         <RouterLink to="/" class="btn btn-ghost text-xl font-bold">School Management</RouterLink>
       </div>
-      <div class="navbar-center hidden lg:flex">
+      <div class="navbar-center hidden lg:flex" v-show="authStore.remainingIsAuthenticated">
         <ul class="menu menu-horizontal px-1 gap-2">
           <li>
             <RouterLink to="/" active-class="bg-gray-100" exact-active-class="bg-gray-300"

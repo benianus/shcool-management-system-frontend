@@ -99,7 +99,7 @@ const router = createRouter({
     {
       path: '/logout',
       name: 'logout',
-      redirect: '/login',
+      component: {},
     },
     {
       path: '/:pathMatch(.*)*',
