@@ -1,5 +1,5 @@
 export enum StoreType {
-  TEACHERS = 'teachers',
-  STUDENTS = 'students',
-  CLASSES = 'classes',
+    TEACHERS = 'teachers',
+    STUDENTS = 'students',
+    CLASSES = 'classes',
 }

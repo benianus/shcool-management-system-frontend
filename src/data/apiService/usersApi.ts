@@ -1,3 +1,1 @@
-export const UserApi = {
-  
-}
+export const UserApi = {};

@@ -1,9 +1,9 @@
 body {
-  background-color: rgb(238, 238, 238);
-  height: 100vh;
-  font-family: 'Elms Sans', sans-serif;
+    background-color: rgb(238, 238, 238);
+    height: 100vh;
+    font-family: 'Elms Sans', sans-serif;
 }
 
 #app {
-  height: 100%;
+    height: 100%;
 }

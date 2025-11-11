@@ -1,15 +1,15 @@
 export function clearLocalStorage() {
-  localStorage.clear()
+    localStorage.clear();
 }
 
 export function removeItemFromLocalStorage(key: string) {
-  localStorage.removeItem(key)
+    localStorage.removeItem(key);
 }
 
 export function setItemInLocalStorage(key: string, value: string) {
-  localStorage.setItem(key, value)
+    localStorage.setItem(key, value);
 }
 
 export function getItemFromLocalStorage(key: string) {
-  return localStorage.getItem(key)
+    return localStorage.getItem(key);
 }

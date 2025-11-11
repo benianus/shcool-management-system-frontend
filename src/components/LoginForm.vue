@@ -1,43 +1,43 @@
 <script setup lang="ts">
-import { useForm } from 'vee-validate'
-import { toTypedSchema } from '@vee-validate/zod'
-import * as z from 'zod'
+import { useForm } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/zod';
+import * as z from 'zod';
 import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form';
 
 const formSchema = toTypedSchema(
-  z.object({
-    username: z.string().min(2).max(50),
-  }),
-)
+    z.object({
+        username: z.string().min(2).max(50),
+    })
+);
 
 const form = useForm({
-  validationSchema: formSchema,
-})
+    validationSchema: formSchema,
+});
 
 const onSubmit = form.handleSubmit((values) => {
-  console.log('Form submitted!', values)
-})
+    console.log('Form submitted!', values);
+});
 </script>
 
 <template>
-  <form @submit="onSubmit">
-    <FormField v-slot="{ componentField }" name="username">
-      <FormItem>
-        <FormLabel>Username</FormLabel>
-        <FormControl>
-          <Input type="text" placeholder="shadcn" v-bind="componentField" />
-        </FormControl>
-        <FormDescription> This is your public display name. </FormDescription>
-        <FormMessage />
-      </FormItem>
-    </FormField>
-    <Button type="submit"> Submit </Button>
-  </form>
+    <form @submit="onSubmit">
+        <FormField v-slot="{ componentField }" name="username">
+            <FormItem>
+                <FormLabel>Username</FormLabel>
+                <FormControl>
+                    <Input type="text" placeholder="shadcn" v-bind="componentField" />
+                </FormControl>
+                <FormDescription> This is your public display name. </FormDescription>
+                <FormMessage />
+            </FormItem>
+        </FormField>
+        <Button type="submit"> Submit </Button>
+    </form>
 </template>
