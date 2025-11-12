@@ -33,7 +33,6 @@ const form = useForm({
 });
 
 const onSubmit = form.handleSubmit(async (values) => {
-    console.log('Form submitted!', values);
     try {
         changeLoadingStatus(true);
         const response = await AuthApi.register({ credentials: values });

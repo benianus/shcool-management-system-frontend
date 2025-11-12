@@ -20,7 +20,6 @@ export const useTeacherStore = defineStore('teachers', {
         async showTeacher({ id }: { id?: string | string[] }) {
             try {
                 const response = await TeacherApi.show({ id: id });
-                console.log(response?.data);
                 this.teacher = response?.data;
                 return response;
             } catch (error) {

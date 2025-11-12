@@ -10,10 +10,11 @@ import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { AuthApi } from '@/data/apiService/authApi';
 import Loader from '@/components/Loader.vue';
 import { useLoader } from '@/composables/loader';
-import { watch } from 'vue';
+import { provide, watch } from 'vue';
 import AlertDialog from '@/components/AlertDialog.vue';
 import { useStudentsStore } from '@/stores/studentsStore';
 import { StudentApi } from '@/data/apiService/studentsApi';
+import { ChartNetwork } from 'lucide-vue-next';
 
 // stores
 const studentStore = useStudentsStore();
@@ -33,9 +34,11 @@ const form = useForm({
     validationSchema: formSchema,
 });
 
+const { isSubmitting } = form;
 // router
 const router = useRouter();
 const route = useRoute();
+
 // methods
 const onSubmit = form.handleSubmit(async (values) => {
     values = {
@@ -44,10 +47,8 @@ const onSubmit = form.handleSubmit(async (values) => {
         birthdate:
             values.birthdate === undefined ? String(studentStore.student.class) : values.birthdate,
     };
-    console.log('Form submitted!', values);
 
     try {
-        changeLoadingStatus(true);
         const response = await StudentApi.update({
             id: route.params.id,
             values,
@@ -56,10 +57,7 @@ const onSubmit = form.handleSubmit(async (values) => {
         if (response?.status === 204) {
             router.push('/students');
         }
-    } catch (error) {
-    } finally {
-        changeLoadingStatus(false);
-    }
+    } catch (error) {}
 });
 
 watch(() => route.params.id, fetchData, { immediate: true });
@@ -69,9 +67,14 @@ async function fetchData(id?: string | string[]) {
 }
 
 async function handelDelete() {
-    const response = await StudentApi.delete({ id: route.params.id });
-    if (response?.status === 204) {
-        router.push('/students');
+    try {
+        changeLoadingStatus(true);
+        const response = await StudentApi.delete({ id: route.params.id });
+        if (response?.status === 204) {
+            router.push('/students');
+        }
+    } finally {
+        changeLoadingStatus(false);
     }
 }
 </script>
@@ -125,12 +128,15 @@ async function handelDelete() {
                 </FormItem>
             </FormField>
             <Button type="submit">
-                <Loader :loading="isLoading" />
+                <Loader :loading="isSubmitting" />
                 Update
             </Button>
             <AlertDialog @delete="handelDelete">
                 <template #alertDialogue>
-                    <Button variant="outline" class="w-full bg-red-400"> Delete </Button>
+                    <Button variant="outline" class="w-full bg-red-400">
+                        <Loader :loading="isLoading" />
+                        Delete
+                    </Button>
                 </template>
             </AlertDialog>
         </form>

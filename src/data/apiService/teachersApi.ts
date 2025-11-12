@@ -1,5 +1,4 @@
 import { axiosClient } from '@/config/axios';
-import { getCSRF } from '../global';
 import { useAuthStore } from '@/stores/authStore';
 
 export const TeacherApi = {
@@ -24,7 +23,6 @@ export const TeacherApi = {
     show: async ({ id }: { id?: string | string[] } = {}) => {
         try {
             const response = await axiosClient.get(`/api/teachers/${id}`);
-            // console.log(response)
             return response;
         } catch (error) {
             console.log(error);
@@ -52,14 +50,12 @@ export const TeacherApi = {
         values?: { name?: string; email?: string; course?: string };
     } = {}) => {
         try {
-            // await getCSRF()
             const authStore = useAuthStore();
             const response = await axiosClient.put(`/api/teachers/${id}`, values, {
                 headers: {
                     Authorization: `Bearer ${authStore.token}`,
                 },
             });
-            console.log(response);
             return response;
         } catch (error) {
             console.log(error.response.data.message);
@@ -67,14 +63,12 @@ export const TeacherApi = {
     },
     delete: async ({ id }: { id?: string | string[] }) => {
         try {
-            // await getCSRF()
             const authStore = useAuthStore();
             const response = await axiosClient.delete(`/api/teachers/${id}`, {
                 headers: {
                     Authorization: `Bearer ${authStore.token}`,
                 },
             });
-            console.log(response);
             return response;
         } catch (error) {
             console.log(error);

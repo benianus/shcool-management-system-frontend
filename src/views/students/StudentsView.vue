@@ -2,7 +2,7 @@
     <div class="">
         <StudentsTable>
             <template #title>
-                <Title title="Students" btn-title="Teacher" class="my-4">
+                <Title title="Students" class="my-4">
                     <template #button>
                         <CustomButton btnTitle="Student" pathName="create-student" />
                     </template>

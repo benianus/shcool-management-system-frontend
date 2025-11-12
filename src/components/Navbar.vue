@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import { AuthApi } from '@/data/apiService/authApi';
 import { useAuthStore } from '@/stores/authStore';
-import { House, LibraryBig, Presentation, School, Speech, Users } from 'lucide-vue-next';
+import {
+    ChartCandlestick,
+    House,
+    LibraryBig,
+    Presentation,
+    School,
+    Speech,
+    Users,
+} from 'lucide-vue-next';
 import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
@@ -16,7 +24,7 @@ async function logout() {
 </script>
 
 <template>
-    <div>
+    <div v-show="authStore.isAuthenticated">
         <div class="navbar bg-base-100 shadow-sm">
             <div class="navbar-start">
                 <div class="dropdown">
@@ -88,6 +96,16 @@ async function logout() {
                             exact-active-class="bg-gray-300"
                             ><Presentation />Classes</RouterLink
                         >
+                    </li>
+                    <li>
+                        <RouterLink
+                            to="/grades"
+                            active-class="bg-gray-100"
+                            exact-active-class="bg-gray-300"
+                        >
+                            <ChartCandlestick />
+                            Grades
+                        </RouterLink>
                     </li>
                 </ul>
             </div>

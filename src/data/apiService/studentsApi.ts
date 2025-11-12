@@ -10,7 +10,6 @@ export const StudentApi = {
             const response = await axiosClient.get(
                 `/api/students?page=${page}&per_page=${perPage}&search=${search}`
             );
-            console.log(response.data);
             return response;
         } catch (error) {
             console.log(error.response.data.message);
@@ -24,7 +23,18 @@ export const StudentApi = {
             console.log(error.response.data.message);
         }
     },
-    store: async () => {},
+    store: async ({
+        values,
+    }: {
+        values?: { name?: string; email?: string; birthdate?: string; user_id?: number };
+    } = {}) => {
+        try {
+            const response = await axiosClient.post('/api/students', values);
+            return response;
+        } catch (error) {
+            console.log(error.response);
+        }
+    },
     update: async ({
         id,
         values,

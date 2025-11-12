@@ -32,7 +32,6 @@ const router = useRouter();
 
 // methods
 const onSubmit = form.handleSubmit(async (values) => {
-    console.log('Form submitted!', values);
     try {
         changeLoadingStatus(true);
         const response = await AuthApi.login({ credentials: values });

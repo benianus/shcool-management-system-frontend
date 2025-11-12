@@ -10,8 +10,11 @@ import { RouterLink, useRouter } from 'vue-router';
 import { AuthApi } from '@/data/apiService/authApi';
 import Loader from '@/components/Loader.vue';
 import { useLoader } from '@/composables/loader';
+import { StudentApi } from '@/data/apiService/studentsApi';
+import { useAuthStore } from '@/stores/authStore';
 
 // stores
+const authStore = useAuthStore();
 
 // composables
 const { isLoading, changeLoadingStatus } = useLoader();
@@ -20,7 +23,7 @@ const formSchema = toTypedSchema(
     z.object({
         name: z.string().min(3).max(255).default('Mohamed BENIANE'),
         email: z.string().email().default('beniane39@gmail.com'),
-        birthdate: z.string(),
+        birthdate: z.string().date(),
     })
 );
 
@@ -34,6 +37,16 @@ const router = useRouter();
 // methods
 const onSubmit = form.handleSubmit(async (values) => {
     console.log('Form submitted!', values);
+    values = { ...values, ...{ user_id: authStore.user?.id } };
+    try {
+        changeLoadingStatus(true);
+        const response = await StudentApi.store({ values });
+        if (response?.status === 201) {
+            router.push({ name: 'students' });
+        }
+    } finally {
+        changeLoadingStatus(false);
+    }
 });
 </script>
 

@@ -10,11 +10,9 @@ interface UserCredentials {
 
 export const AuthApi = {
     login: async ({ credentials }: { credentials: UserCredentials }) => {
-        console.log(credentials);
         const authStore = useAuthStore();
         try {
             const response = await axiosClient.post('/api/login', credentials);
-            // console.log(response.data);
             authStore.saveCurrentUserInLocalStorage(response?.data?.user);
             authStore.saveCurrentTokenInLocalStorage(response?.data?.token);
             return response;
@@ -26,7 +24,6 @@ export const AuthApi = {
         try {
             const authStore = useAuthStore();
             const response = await axiosClient.post('/api/register', credentials);
-            // console.log(response.data);
             authStore.saveCurrentUserInLocalStorage(response?.data?.user);
             authStore.saveCurrentTokenInLocalStorage(response?.data?.token);
             return response;

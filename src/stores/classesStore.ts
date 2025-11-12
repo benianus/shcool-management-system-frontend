@@ -7,9 +7,9 @@ export const useClassesStore = defineStore('classes', {
         classes: [],
     }),
     actions: {
-        async fetchClasses() {
+        async fetchClasses({ search = '' }: { search?: string }) {
             try {
-                const response = await ClassesApi.getAll();
+                const response = await ClassesApi.index({ search });
                 this.classes = response?.data;
             } catch (error) {
                 console.log(error);

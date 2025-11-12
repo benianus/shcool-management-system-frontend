@@ -98,6 +98,39 @@ const router = createRouter({
             },
         },
         {
+            path: '/classes',
+            name: 'create-class',
+            component: () => import('../views/classes/CreateClassView.vue'),
+            beforeEnter: async (to, from) => {
+                const authStore = useAuthStore();
+                if (!authStore.isAuthenticated) {
+                    return { name: 'login' };
+                }
+            },
+        },
+        {
+            path: '/classes',
+            name: 'edit-class',
+            component: () => import('../views/classes/EditClassView.vue'),
+            beforeEnter: async (to, from) => {
+                const authStore = useAuthStore();
+                if (!authStore.isAuthenticated) {
+                    return { name: 'login' };
+                }
+            },
+        },
+        {
+            path: '/grades',
+            name: 'grades',
+            component: () => import('../views/grades/GradesView.vue'),
+            beforeEnter: async (to, from) => {
+                const authStore = useAuthStore();
+                if (!authStore.isAuthenticated) {
+                    return { name: 'login' };
+                }
+            },
+        },
+        {
             path: '/login',
             name: 'login',
             component: () => import('../views/Auth/LoginView.vue'),

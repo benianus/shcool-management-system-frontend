@@ -10,17 +10,13 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-
-async function handleDelete(e) {
-    console.log('Delete');
-}
 </script>
 
 <template>
     <form>
         <AlertDialog>
             <AlertDialogTrigger as-child>
-                <slot name="alertDialogue" v-if="$slots.alertDialogue" />
+                <slot name="alertDialogue" v-if="$slots.alertDialogue"> </slot>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>

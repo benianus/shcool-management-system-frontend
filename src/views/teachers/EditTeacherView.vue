@@ -41,8 +41,6 @@ const route = useRoute();
 // methods
 const onSubmit = form.handleSubmit(async (values) => {
     try {
-        console.log(values);
-
         /**
          * handle undefined value in case of regret of modifying item
          */
@@ -72,7 +70,6 @@ const onSubmit = form.handleSubmit(async (values) => {
 async function deleteTeacher() {
     try {
         isLoading.value = true;
-        console.log('Delete');
         const response = await TeacherApi.delete({ id: route.params.id });
         if (response?.status === 200) {
             router.push('/teachers');

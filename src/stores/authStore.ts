@@ -3,7 +3,7 @@ import {
     saveAuthUserInLocalStorage,
 } from '@/data/localStorage/authUser';
 import { getTokenFromLocalStorage, saveTokenInLocalStorage } from '@/data/localStorage/token';
-import { clearLocalStorage } from '@/helpers';
+import { removeItemFromLocalStorage } from '@/helpers';
 import type { User } from '@/models/user';
 import { defineStore } from 'pinia';
 
@@ -23,7 +23,8 @@ export const useAuthStore = defineStore('auth', {
             saveTokenInLocalStorage(token);
         },
         clearTokenFromLocalStorage() {
-            clearLocalStorage();
+            removeItemFromLocalStorage('user');
+            removeItemFromLocalStorage('token');
             this.user = null;
             this.token = null;
         },
