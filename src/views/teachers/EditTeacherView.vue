@@ -11,6 +11,7 @@ import { useRoute, useRouter } from 'vue-router';
 import TitleBar from '@/components/TitleBar.vue';
 import { useTeacherStore } from '@/stores/teachersStore';
 import { useClassesStore } from '@/stores/classesStore';
+import { courses } from '@/data/inMemory/courses';
 
 // stores
 const teacherStore = useTeacherStore();
@@ -86,7 +87,7 @@ watch(() => route.params.id, fetchData, { immediate: true });
 async function fetchData(id: string | string[] | undefined) {
     try {
         await teacherStore.showTeacher({ id: id });
-        await classesStore.fetchClasses();
+        // await classesStore.fetchClasses({});
     } catch (error) {
         console.log(error.data.message);
     }
@@ -139,11 +140,7 @@ async function fetchData(id: string | string[] | undefined) {
                             v-bind="componentField"
                             class="border-gray-400 border-2 rounded-lg px-2 py-2"
                         >
-                            <option
-                                v-for="course in classesStore.classes"
-                                :key="course.id"
-                                :value="course.name"
-                            >
+                            <option v-for="course in courses" :key="course.id" :value="course.name">
                                 {{ course.name }}
                             </option>
                         </select>

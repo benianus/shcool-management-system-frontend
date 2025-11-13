@@ -64,7 +64,7 @@ watch([() => paginationStore.page, () => searchbarStore.filter], async ([page, f
     loading.value = true;
     paginationStore.disablePrevBtn = page === 1;
     const response = await studentsStore.fetchStudents({ page, search: filter });
-    paginationStore.disableNextBtn = studentsStore.students.last_page == paginationStore.page;
+    paginationStore.disableNextBtn = studentsStore.students.last_page == page;
     loading.value = false;
 });
 

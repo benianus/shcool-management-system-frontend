@@ -18,7 +18,7 @@
                 <tbody>
                     <!-- row 1 -->
                     <tr
-                        v-for="course in classesStore.classes"
+                        v-for="course in classesStore.classes.data"
                         :key="course.id"
                         class="border-b border-gray-200"
                     >
@@ -34,7 +34,7 @@
                 </tbody>
             </table>
         </div>
-        <!-- <slot name="pagination" v-if="$slots.pagination" /> -->
+        <slot name="pagination" v-if="$slots.pagination" />
     </div>
 </template>
 
@@ -54,14 +54,14 @@ const paginationStore = usePaginationStore();
 watch([() => paginationStore.page, () => searchbarStore.filter], async ([page, filter]) => {
     loading.value = true;
     paginationStore.disablePrevBtn = page === 1;
-    const response = await classesStore.fetchClasses({ search: filter });
-    paginationStore.disableNextBtn = page === 1;
+    const response = await classesStore.fetchClasses({ page, search: filter });
+    paginationStore.disableNextBtn = page === classesStore.classes.last_page;
     loading.value = false;
 });
 
 onMounted(async () => {
     loading.value = true;
-    await classesStore.fetchClasses({});
+    await classesStore.fetchClasses();
     loading.value = false;
 });
 </script>

@@ -9,6 +9,7 @@ import { TeacherApi } from '@/data/apiService/teachersApi';
 import { useRouter } from 'vue-router';
 import TitleBar from '@/components/TitleBar.vue';
 import { useClassesStore } from '@/stores/classesStore';
+import { courses } from '@/data/inMemory/courses';
 
 // stores
 const classesStore = useClassesStore();
@@ -64,7 +65,7 @@ const onSubmit = form.handleSubmit(async (values) => {
 
 onMounted(async () => {
     try {
-        await classesStore.fetchClasses();
+        // await classesStore.fetchClasses({});
     } catch (error) {
         console.log(error.response?.data?.message ?? 'something wrong');
     }
@@ -118,7 +119,7 @@ onMounted(async () => {
                             class="border-gray-400 border-2 rounded-lg px-2 py-2"
                         >
                             <option
-                                v-for="course in classesStore.classes"
+                                v-for="course in courses"
                                 :key="course.id"
                                 :value="course.name"
                             >

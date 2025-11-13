@@ -1,4 +1,5 @@
 import { axiosClient } from '@/config/axios';
+import { useAuthStore } from '@/stores/authStore';
 
 export const StudentApi = {
     get: async ({
@@ -29,7 +30,12 @@ export const StudentApi = {
         values?: { name?: string; email?: string; birthdate?: string; user_id?: number };
     } = {}) => {
         try {
-            const response = await axiosClient.post('/api/students', values);
+            const authStore = useAuthStore();
+            const response = await axiosClient.post('/api/students', values, {
+                headers: {
+                    Authorization: `Bearer ${authStore.token}`,
+                },
+            });
             return response;
         } catch (error) {
             console.log(error.response);
@@ -43,7 +49,12 @@ export const StudentApi = {
         values?: { name?: string; email?: string; birthdate?: string };
     } = {}) => {
         try {
-            const response = await axiosClient.put(`/api/students/${id}`, values);
+            const authStore = useAuthStore();
+            const response = await axiosClient.put(`/api/students/${id}`, values, {
+                headers: {
+                    Authorization: `Bearer ${authStore.token}`,
+                },
+            });
             return response;
         } catch (error) {
             console.log(error.response.data.message);
@@ -51,7 +62,12 @@ export const StudentApi = {
     },
     delete: async ({ id }: { id?: string | string[] }) => {
         try {
-            const response = await axiosClient.delete(`/api/students/${id}`);
+            const authStore = useAuthStore();
+            const response = await axiosClient.delete(`/api/students/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${authStore.token}`,
+                },
+            });
             return response;
         } catch (error) {
             console.log(error.response.data.message);
